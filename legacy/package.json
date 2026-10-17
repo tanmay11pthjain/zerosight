@@ -1,0 +1,23 @@
+{
+  "name": "zerosight",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "ZeroSight: post-quantum, zero-knowledge file exchange (Forge & Frost prototype)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node server/index.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@noble/post-quantum": "^0.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  }
+}

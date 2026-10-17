@@ -1,0 +1,14 @@
+{
+  "name": "zerosight",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install:all": "npm --prefix api install && npm --prefix web install",
+    "demo": "node demo.mjs",
+    "start": "npm --prefix web run build && node api/src/server.ts",
+    "dev": "node dev.mjs",
+    "test": "npm --prefix api test && npm --prefix web test",
+    "typecheck": "npm --prefix api run typecheck && npm --prefix web run typecheck",
+    "build": "npm --prefix web run build"
+  }
+}

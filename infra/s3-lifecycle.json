@@ -1,0 +1,11 @@
+{
+  "Rules": [
+    {
+      "ID": "zerosight-backstop",
+      "Filter": { "Prefix": "rooms/" },
+      "Status": "Enabled",
+      "Expiration": { "Days": 8 },
+      "AbortIncompleteMultipartUpload": { "DaysAfterInitiation": 1 }
+    }
+  ]
+}
