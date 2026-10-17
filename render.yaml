@@ -1,7 +1,8 @@
 # Render Blueprint: ONE free web service serves the app and the API on one URL.
-# No AWS, no database to create: files are kept in server memory until they are
-# downloaded or expire, and room state runs in an in-process Postgres (PGlite).
-# Dashboard → New → Blueprint → pick this repo → Apply. That's it.
+# No AWS: files are kept in server memory until they are downloaded or expire.
+# Room state lives in a free Render Postgres (created by this blueprint), which
+# keeps the server around 85 MB of memory on the 512 MB free plan.
+# Dashboard → New → Blueprint → pick this repo → Apply.
 services:
   - type: web
     name: zerosight
@@ -15,6 +16,12 @@ services:
         value: "24"
       - key: STORAGE_TYPE
         value: memory
+      - key: DATABASE_URL
+        fromDatabase:
+          name: zerosight-db
+          property: connectionString
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=256"
       - key: ALLOWED_ORIGINS # your Vercel address, e.g. https://zerosight.vercel.app (comma-separate several)
         sync: false
       - key: RECEIPT_SIGNING_KEY # optional; README has a one-line command to make one
@@ -25,3 +32,7 @@ services:
         value: "314572800" # 300 MB across all live transfers
       - key: MIN_PART_SIZE
         value: "5242880" # 5 MB pieces
+
+databases:
+  - name: zerosight-db
+    plan: free # Render deletes free databases after 30 days: recreate it (tables are created on boot)

@@ -3,11 +3,11 @@ import { buildApp } from './app.ts';
 import { loadConfig } from './config.ts';
 import { openDb } from './db.ts';
 import { memoryStorage } from './storage/memory.ts';
-import { s3Storage } from './storage/s3.ts';
 
 const config = loadConfig();
 const db = await openDb(config.databaseUrl);
-const storage = config.storageType === 's3' ? s3Storage(config.awsRegion, config.bucket) : memoryStorage(config.publicUrl);
+// The AWS SDK is only loaded when S3 is actually used (saves memory on small servers).
+const storage = config.storageType === 's3' ? (await import('./storage/s3.ts')).s3Storage(config.awsRegion, config.bucket) : memoryStorage(config.publicUrl);
 await storage.check();
 
 const verifyHuman = config.turnstileSecret

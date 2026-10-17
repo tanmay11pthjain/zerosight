@@ -23,6 +23,7 @@
     "pg": "^8.23.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite-socket": "^0.2.13",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
     "typescript": "^7.0.2",

@@ -13,7 +13,7 @@ let storage: ReturnType<typeof memoryStorage>;
 
 async function setup(over: Partial<Config> = {}) {
   const config = loadConfig({ minPartSize: 64 * KB, publicUrl: 'http://t', storageType: 'memory', ...over });
-  db = await openDb('');
+  db = await openDb(process.env.TEST_DATABASE_URL ?? '');
   storage = memoryStorage(config.publicUrl);
   app = await buildApp({ config, db, storage });
 }
