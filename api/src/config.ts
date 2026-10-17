@@ -36,7 +36,8 @@ export function loadConfig(overrides: Partial<Config> = {}): Config {
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean),
-    publicUrl: env.PUBLIC_API_URL ?? '', // '' = storage URLs are relative to the page (single-origin deploy)
+    // Absolute API address for storage links. Needed when the app (Vercel) and API (Render) are on different domains.
+    publicUrl: env.PUBLIC_API_URL ?? env.RENDER_EXTERNAL_URL ?? '',
     maxRoomBytes: num('MAX_ROOM_BYTES', (env.STORAGE_TYPE === 's3' ? 2048 : 1024) * MiB),
     maxStoredBytes: num('MAX_STORED_BYTES', (env.STORAGE_TYPE === 's3' ? 4096 : 2048) * MiB),
     monthlyEgressLimitGb: num('MONTHLY_EGRESS_LIMIT_GB', 90),

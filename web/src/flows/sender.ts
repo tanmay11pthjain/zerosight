@@ -24,7 +24,11 @@ export function senderFlow(app: HTMLElement): () => void {
   s.step(null);
   s.server('Nothing. Your files are still only on this device.');
 
-  const view = h(`<section class="stage"><div class="zero"></div><div class="panel" data-panel></div></section>`);
+  const view = h(`<section class="stage hero">
+    <header class="hero-head"><h1>Send files privately</h1><p class="lead">Locked on your device. One person, one download, then gone.</p></header>
+    <div class="zero"></div>
+    <div class="panel" data-panel></div>
+  </section>`);
   s.main.replaceChildren(view);
   const panel = $('[data-panel]', view);
   let files: File[] = [];
@@ -53,8 +57,7 @@ export function senderFlow(app: HTMLElement): () => void {
     const el = h(`<div class="home">
       ${
         files.length
-          ? `<h1>Ready to send</h1>
-             <ul class="files">${files
+          ? `<ul class="files">${files
                .map((f, i) => `<li><span class="fname">${esc(f.name)}</span><span class="fsize">${fmtBytes(f.size)}</span><button class="x" type="button" data-rm="${i}" aria-label="Remove ${esc(f.name)}">×</button></li>`)
                .join('')}</ul>
              <p class="total">${files.length} ${files.length === 1 ? 'file' : 'files'} · <b>${fmtBytes(total)}</b></p>
@@ -66,13 +69,7 @@ export function senderFlow(app: HTMLElement): () => void {
              <button class="btn big" type="button" data-send ${tooBig ? 'disabled' : ''}>Send securely</button>
              <p class="fine">One person can open the link, one time. Then everything is deleted.</p>
              <div class="pick"><button class="link" type="button" data-files>Add files</button>${TOUCH ? '' : '<button class="link" type="button" data-folder>Add a folder</button>'}</div>`
-          : `<h1>Send files privately</h1>
-             <div class="pick"><button class="btn" type="button" data-files>Choose files</button>${TOUCH ? '' : '<button class="btn ghost" type="button" data-folder>Choose a folder</button>'}</div>
-             <ol class="how">
-               <li><b>Locked here.</b> Your files are encrypted on this device before anything is uploaded.</li>
-               <li><b>One link, one person.</b> Only the first device that opens the link can unlock them.</li>
-               <li><b>Then gone.</b> After one download, everything is deleted from our server.</li>
-             </ol>`
+          : `<div class="pick"><button class="btn big" type="button" data-files>Choose files</button>${TOUCH ? '' : '<button class="btn big ghost" type="button" data-folder>Choose a folder</button>'}</div>`
       }
       <p class="error" role="alert" data-err hidden></p>
     </div>`);
@@ -191,6 +188,7 @@ export function senderFlow(app: HTMLElement): () => void {
 
     s.step('lock', ['key']);
     s.server('Encrypted pieces only. No file names, no key.');
+    view.classList.remove('hero');
     const el = h(`<div class="link-stage">
       <h1>Share this link</h1>
       <div class="share">

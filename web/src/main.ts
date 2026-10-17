@@ -5,6 +5,7 @@ import '@fontsource/instrument-sans/600.css';
 import './styles.css';
 import { receiverFlow } from './flows/receiver';
 import { senderFlow } from './flows/sender';
+import { mountShader } from './lib/shader';
 import { h } from './lib/ui';
 
 const app = document.getElementById('app')!;
@@ -32,3 +33,4 @@ function route() {
 for (const t of ['dragover', 'drop'] as const) window.addEventListener(t, (e) => e.preventDefault());
 window.addEventListener('hashchange', route);
 route();
+mountShader();

@@ -15,6 +15,8 @@ services:
         value: "24"
       - key: STORAGE_TYPE
         value: memory
+      - key: ALLOWED_ORIGINS # your Vercel address, e.g. https://zerosight.vercel.app (comma-separate several)
+        sync: false
       - key: RECEIPT_SIGNING_KEY # optional; README has a one-line command to make one
         sync: false
       - key: MAX_ROOM_BYTES
